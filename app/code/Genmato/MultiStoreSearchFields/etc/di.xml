@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category    Genmato
+ * @package     Genmato_MultiStoreSearchFields
+ * @copyright   Copyright (c) 2015 Genmato BV (https://genmato.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magento\CatalogSearch\Block\Advanced\Form">
+        <plugin name="CatalogAdvancedSearchFormAttributes"
+                type="Genmato\MultiStoreSearchFields\Block\Advanced\Form\Plugin"
+                sortOrder="9999"
+                />
+    </type>
+</config>

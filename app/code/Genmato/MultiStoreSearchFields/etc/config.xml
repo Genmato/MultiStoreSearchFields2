@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+* @category    Genmato
+* @package     Genmato_MultiStoreSearchFields
+* @copyright   Copyright (c) 2015 Genmato BV (https://genmato.com)
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Magento/Core/etc/config.xsd">
+    <default>
+        <multistoresearchfields>
+            <config>
+                <attributes>name,sku,description,short_description,price</attributes>
+            </config>
+        </multistoresearchfields>
+    </default>
+</config>

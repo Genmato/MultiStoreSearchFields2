@@ -1,0 +1,24 @@
+{
+    "name": "genmato/multistoresearchfields",
+    "description": "Select per store the product attributes that should be visible in the Advanced search form ",
+    "require": {
+        "magento/magento-composer-installer": "*"
+    },
+    "type": "magento2-module",
+    "version": "2.0.0",
+    "license": "OSL-3.0",
+    "autoload": {
+        "psr-4": {
+            "Genmato\\": "app/code/Genmato/"
+        }
+    },
+    "extra": {
+        "map": [
+            [
+                "app/code/Genmato/MultiStoreSearchFields/*",
+                "Genmato/MultiStoreSearchFields"
+            ]
+        ]
+    }
+
+}
