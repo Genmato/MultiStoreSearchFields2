@@ -11,46 +11,51 @@ class Plugin
 {
 
     /**
-     * Core store config
+     * Store manager
      *
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected $_scopeConfig;
+    protected $_storeManager;
+
     /**
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * Modules configuration
+     *
+     * @var \Magento\Framework\App\Resource
+     */
+    protected $_resourceModel;
+
+    /**
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Framework\App\Resource            $resource
      */
     public function __construct(
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Framework\App\Resource $resource
     ) {
-        $this->_scopeConfig = $scopeConfig;
+        $this->_storeManager = $storeManager;
+        $this->_resourceModel = $resource;
     }
 
     public function afterGetSearchableAttributes(\Magento\CatalogSearch\Block\Advanced\Form $subject, $result)
     {
-        $fields = trim($this->getStoreConfig('multistoresearchfields/config/attributes'));
+        $storeAttributes = $result;
+        $table = $this->_resourceModel->getTableName('genmato_multistoresearchfields_attribute_search_store');
+        $tableAlias = 'attribute_search_store';
+        $storeId = $this->_storeManager->getStore()->getId();
 
-        if ($fields == '') {
-            return $result;
-        }
+        $storeAttributes->getSelect()->joinLeft(
+            [$tableAlias => $table],
+            "main_table.attribute_id={$tableAlias}.attribute_id",
+            []
+        )->where("({$tableAlias}.store_id='0' OR {$tableAlias}.store_id='{$storeId}')");
 
-        $attrFields = explode(',', $fields);
-        foreach ($result as $attrKey => $attribute) {
-            if (!in_array($attribute->getAttributeCode(), $attrFields)) {
-                $result->removeItemByKey($attrKey);
+        $attrIds = $storeAttributes->getAllIds();
+        foreach ($result as $item) {
+            if (!in_array($item->getId(), $attrIds)) {
+                $result->removeItemByKey($item->getId());
             }
         }
-
         return $result;
     }
 
-    /**
-     * @param      $path
-     * @param null $store
-     *
-     * @return string
-     */
-    protected function getStoreConfig($path, $store = null)
-    {
-        return $this->_scopeConfig->getValue($path, \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $store);
-    }
 }
