@@ -1,3 +1,6 @@
+### Updated version for Magento 2 GA: [M2 MultistoreSearchFields](https://github.com/Genmato/M2_MultistoreSearchFields)
+
+
 ### This extension is for Magento 2.x (BETA)
 
 The version that is compatible with Magento 1.x can be found at https://genmato.com/multistore-search-fields
